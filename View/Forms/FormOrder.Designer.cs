@@ -36,10 +36,20 @@
             this.buttonAddImage = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.textBoxFIO = new System.Windows.Forms.TextBox();
+            this.inputBox = new WinFormsControlLibrarySergeev.VisualControls.EmailInputBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.controlInputRegexEmail = new ControlsLibraryNet60.Input.ControlInputRegexEmail();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // inputBox
+            // 
+            this.inputBox.Location = new System.Drawing.Point(152, 285);
+            this.inputBox.Name = "inputBox";
+            this.inputBox.Pattern = "^(?(\")(\"[^\"]+?\"@)|(([0-9a-z]((\\.(?!\\.))|[-!#\\$%&\'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[0-9" +
+            "a-z])@))(?(\\[)(\\[(\\d{1,3}\\.){3}\\d{1,3}\\])|(([0-9a-z][-\\w]*[0-9a-z]*\\.)+[a-z0-9]{" +
+            "2,17}))$";
+            this.inputBox.Size = new System.Drawing.Size(190, 20);
+            this.inputBox.TabIndex = 18;
             // 
             // controlSelectedComboBoxList
             // 
@@ -121,16 +131,6 @@
             this.pictureBox.TabIndex = 9;
             this.pictureBox.TabStop = false;
             // 
-            // controlInputRegexEmail
-            // 
-            this.controlInputRegexEmail.Location = new System.Drawing.Point(162, 282);
-            this.controlInputRegexEmail.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.controlInputRegexEmail.Name = "controlInputRegexEmail";
-            this.controlInputRegexEmail.Pattern = "^([\\w\\d\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$";
-            this.controlInputRegexEmail.Size = new System.Drawing.Size(214, 23);
-            this.controlInputRegexEmail.TabIndex = 1;
-            this.controlInputRegexEmail.Value = "";
-            // 
             // FormOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -144,7 +144,7 @@
             this.Controls.Add(this.labelMail);
             this.Controls.Add(this.labelProduct);
             this.Controls.Add(this.labelFIO);
-            this.Controls.Add(this.controlInputRegexEmail);
+            this.Controls.Add(this.inputBox);
             this.Controls.Add(this.controlSelectedComboBoxList);
             this.Name = "FormOrder";
             this.Text = "Заказ";
@@ -167,6 +167,6 @@
         private Button buttonSave;
         private TextBox textBoxFIO;
         private PictureBox pictureBox;
-        private ControlsLibraryNet60.Input.ControlInputRegexEmail controlInputRegexEmail;
+        private WinFormsControlLibrarySergeev.VisualControls.EmailInputBox inputBox;
     }
 }

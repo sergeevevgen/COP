@@ -19,16 +19,13 @@ namespace View.Forms
         private int? id;
         private ProductLogic productLogic;
         private OrderLogic orderLogic;
-        private bool flag_image = false;
         private byte[] image = null;
-        private OrderViewModel model; 
 
         public FormOrder()
         {
             InitializeComponent();
             productLogic = new ProductLogic();
             orderLogic = new OrderLogic();
-            model = new OrderViewModel();
             var productList = productLogic.Read(null);
             var list = new List<string>();
             foreach (var product in productList)
@@ -50,13 +47,8 @@ namespace View.Forms
                         textBoxFIO.Text = view.CustomerFIO;
                         pictureBox.Image = byteArrayToImage(view.Image);
                         controlSelectedComboBoxList.SelectedElement = view.Product;
-                        controlInputRegexEmail.Value = view.Mail;
+                        inputBox.TextElement = view.Mail;
                         image = view.Image;
-
-                        model.CustomerFIO = view.CustomerFIO;
-                        model.Image = view.Image;
-                        model.Product = view.Product;
-                        model.Mail = view.Mail;
                     }
                 }
                 catch (Exception ex)
@@ -69,14 +61,15 @@ namespace View.Forms
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Save();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
-        private void Save()
+        private bool Save()
         {
-            if (textBoxFIO.Text != string.Empty && controlSelectedComboBoxList.SelectedElement != string.Empty && controlInputRegexEmail.Value != null && image != null)
+            if (textBoxFIO.Text != string.Empty && controlSelectedComboBoxList.SelectedElement != string.Empty && inputBox.TextElement != null && image != null)
             {
-                if (id != null && (textBoxFIO.Text != model.CustomerFIO || controlSelectedComboBoxList.SelectedElement != model.Product || controlInputRegexEmail.Value != model.Mail || flag_image))
+                if (id != null /*&& (textBoxFIO.Text != model.CustomerFIO || controlSelectedComboBoxList.SelectedElement != model.Product || inputBox.TextElement != model.Mail || flag_image)*/)
                 {
                     if (MessageBox.Show("Сохранить изменения в заказе?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
@@ -86,11 +79,11 @@ namespace View.Forms
                             CustomerFIO = textBoxFIO.Text,
                             Image = image,
                             Product = controlSelectedComboBoxList.SelectedElement,
-                            Mail = controlInputRegexEmail.Value
+                            Mail = inputBox.TextElement
                         });
-                        DialogResult = DialogResult.OK;
-                        Close();
-                    } 
+                        return true;
+                    }
+                    return false;
                 }
                 else
                 {
@@ -101,16 +94,17 @@ namespace View.Forms
                             CustomerFIO = textBoxFIO.Text,
                             Image = image,
                             Product = controlSelectedComboBoxList.SelectedElement,
-                            Mail = controlInputRegexEmail.Value
+                            Mail = inputBox.TextElement
                         });
-                        DialogResult = DialogResult.OK;
-                        Close();
+                        return true;
                     }
+                    return false;
                 }
             }
             else
             {
                 MessageBox.Show("Введите значения");
+                return false;
             }
         }
 
@@ -126,7 +120,6 @@ namespace View.Forms
                 var image_new = new Bitmap(dialog.FileName);
                 pictureBox.Image = image_new;
                 image = ImageToByteArray(image_new);
-                flag_image = true;
             }
 
             dialog.Dispose();
@@ -157,10 +150,11 @@ namespace View.Forms
 
         private void FormOrder_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (MessageBox.Show("Сохранить изменения перед закрытием?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //{
-            //    Save();
-            //}
+            if (!Save())
+            {
+                e.Cancel = true;
+            }
+            DialogResult = DialogResult.OK;
         }
     }
 }
