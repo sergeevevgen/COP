@@ -1,9 +1,3 @@
-using ComponentsLibraryNet60.DocumentWithChart;
-using ComponentsLibraryNet60.DocumentWithTable;
-using ControlsLibraryNet60.Models;
-using LogicDB.BindingModels;
-using LogicDB.Logics;
-using LogicDB.ViewModels;
 using Plugins;
 using Plugins.Plugins;
 using View.Forms;
