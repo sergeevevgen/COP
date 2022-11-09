@@ -1,4 +1,4 @@
-﻿namespace View.Forms
+﻿namespace Plugins.Forms
 {
     partial class FormOrder
     {

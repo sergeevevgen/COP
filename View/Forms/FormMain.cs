@@ -4,66 +4,65 @@ using ControlsLibraryNet60.Models;
 using LogicDB.BindingModels;
 using LogicDB.Logics;
 using LogicDB.ViewModels;
+using Plugins;
+using Plugins.Plugins;
 using View.Forms;
-using WinFormsControlLibrarySergeev.UnvisualComponents;
-using WinFormsControlLibrarySergeev.UnvisualComponentsK.HelperModels;
 
 namespace View
 {
     public partial class FormMain : Form
     {
-        private OrderLogic orderLogic;
-        private List<DataTableColumnConfig> config;
+        private readonly Dictionary<string, IPluginsConvention> _plugins;
+        private string _selectedPlugin;
         public FormMain()
         {
             InitializeComponent();
-            config = new List<DataTableColumnConfig>
-            {
-                new DataTableColumnConfig
-                {
-                    ColumnHeader = "Id",
-                    PropertyName = "Id",
-                    Visible = false,
-                },
-                new DataTableColumnConfig
-                {
-                    ColumnHeader = "ФИО покупателя",
-                    PropertyName = "CustomerFIO",
-                    Visible = true,
-                    Width = 120
-                },
-                new DataTableColumnConfig
-                {
-                    ColumnHeader = "Товар",
-                    PropertyName = "Product",
-                    Visible = true,
-                    Width = 140
-                },
-                new DataTableColumnConfig
-                {
-                    ColumnHeader = "Почта",
-                    PropertyName = "Mail",
-                    Visible = true,
-                    Width = 200
-                }
-            };
-            dataTableView.LoadColumns(config);
-            orderLogic = new OrderLogic();
-            ReloadData();
+            _plugins = LoadPlugins();
+            _selectedPlugin = string.Empty;
         }
 
-        private void ReloadData()
+        private Dictionary<string, IPluginsConvention> LoadPlugins()
         {
-            dataTableView.Clear();
-            var data = orderLogic.Read(null);
-            if (data.Count > 0)
-            {
-                dataTableView.AddTable(data);
-            }
+            PluginsManager manager = new PluginsManager();
+            Dictionary<string, IPluginsConvention> dic = manager.plugins_dictionary;
+
+
+            ToolStripItem[] toolStripItems = new ToolStripItem[2];
+            ToolStripMenuItem menuItemOrders = new ToolStripMenuItem();
+            menuItemOrders.Text = "Заказы";
+            menuItemOrders.Click += MenuItemOrders_Click;
+            toolStripItems[0] = menuItemOrders;
+
+            ToolStripMenuItem menuItemProduct = new ToolStripMenuItem();
+            menuItemProduct.Text = "Продукты";
+            menuItemProduct.Click += MenuItemProduct_Click;
+            toolStripItems[1] = menuItemProduct;
+
+            ControlsStripMenuItem.DropDownItems.AddRange(toolStripItems);
+            return dic;
+        }
+
+        private void MenuItemProduct_Click(object sender, EventArgs e)
+        {
+            FormProduct formProduct = new FormProduct();
+            formProduct.ShowDialog();
+        }
+
+        private void MenuItemOrders_Click(object sender, EventArgs e)
+        {
+            _selectedPlugin = "Заказы";
+            panelControl.Controls.Clear();
+            panelControl.Controls.Add(_plugins[_selectedPlugin].GetControl);
+            panelControl.Controls[0].Dock = DockStyle.Fill;
         }
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
+            if (string.IsNullOrEmpty(_selectedPlugin) ||
+            !_plugins.ContainsKey(_selectedPlugin))
+            {
+                return;
+            }
             if (!e.Control)
             {
                 return;
@@ -93,45 +92,47 @@ namespace View
 
         private void AddNewElement()
         {
-            var form = new FormOrder();
-            if (form.ShowDialog() == DialogResult.OK)
+            var form = _plugins[_selectedPlugin].GetForm(null);
+            if (form != null && form.ShowDialog() == DialogResult.OK)
             {
-                ReloadData();
+                _plugins[_selectedPlugin].ReloadData();
             }
         }
 
         private void UpdateElement()
         {
-            var element = dataTableView.GetSelectedObject<OrderViewModel>();
+            var element = _plugins[_selectedPlugin].GetElement;
             if (element == null)
             {
                 MessageBox.Show("Нет выбранного элемента", "Ошибка",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var form = new FormOrder { Id = element.Id };
-            if (form.ShowDialog() == DialogResult.OK)
+            var form = _plugins[_selectedPlugin].GetForm(element);
+            if (form != null && form.ShowDialog() == DialogResult.OK)
             {
-                ReloadData();
+                _plugins[_selectedPlugin].ReloadData();
             }
         }
 
         private void DeleteElement()
         {
             if (MessageBox.Show("Удалить выбранный элемент", "Удаление",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
-            var element = dataTableView.GetSelectedObject<OrderViewModel>();
+            var element = _plugins[_selectedPlugin].GetElement;
             if (element == null)
             {
                 MessageBox.Show("Нет выбранного элемента", "Ошибка",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            orderLogic.Delete(new OrderBindingModel { Id = element.Id });
-            ReloadData();
+            if (_plugins[_selectedPlugin].DeleteElement(element))
+            {
+                _plugins[_selectedPlugin].ReloadData();
+            }
         }
 
         private void CreateSimpleDoc()
@@ -139,10 +140,17 @@ namespace View
             using var dialog = new SaveFileDialog { Filter = "xlsx|*.xlsx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                ExcelImageComponent component = new ExcelImageComponent();
-                component.CreateFile(dialog.FileName, "Фото заказов " + DateTime.Now.ToShortDateString(), ExcelImages());
-                MessageBox.Show("Документ сохранен", "Создание документа",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (_plugins[_selectedPlugin].CreateSimpleDocument(new
+                PluginsConventionSaveDocument { FileName = dialog.FileName }))
+                {
+                    MessageBox.Show("Документ сохранен", "Создание документа",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при создании документа", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         private void CreateTableDoc()
@@ -151,39 +159,19 @@ namespace View
             {
                 if (dialog.ShowDialog() == DialogResult.OK) 
                 {
-                    ComponentDocumentWithTableHeaderRowWord component = new ComponentDocumentWithTableHeaderRowWord();
-                    component.CreateDoc(new ComponentsLibraryNet60.Models.ComponentDocumentWithTableHeaderDataConfig<OrderViewModel>
+                    if (_plugins[_selectedPlugin].CreateTableDocument(new
+                    PluginsConventionSaveDocument { FileName = dialog.FileName }))
                     {
-                        FilePath = dialog.FileName,
-                        Header = "Заказы " + DateTime.Now.ToShortDateString(),
-                        UseUnion = true,
-                        ColumnsRowsWidth = new List<(int, int)> { (5, 0), (10, 0), (10, 0), (10, 0) },
-                        ColumnUnion = new List<(int StartIndex, int Count)> { (1, 2) },
-                        Headers = new List<(int ColumnIndex, int RowIndex, string Header, string PropertyName)>
-                        {
-                            (0, 0, "Идентификатор", "Id"),
-                            (1, 0, "Личные данные", ""),
-                            (1, 1, "ФИО", "CustomerFIO"),
-                            (2, 1, "Эл.почта", "Mail"),
-                            (3, 0, "Товар", "Product")
-                        },
-                        Data = orderLogic.Read(null)
-                    });
-                    MessageBox.Show("Документ сохранен", "Создание документа",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Документ сохранен", "Создание документа",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка при создании документа", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-        }
-
-        private List<byte[]> ExcelImages()
-        {
-            var list = orderLogic.Read(null);
-            var list_bytes = new List<byte[]>();
-            foreach (var item in list)
-            {
-                list_bytes.Add(item.Image);
-            }
-            return list_bytes;
         }
 
         private void CreateChartDoc()
@@ -191,64 +179,36 @@ namespace View
             using var dialog = new SaveFileDialog { Filter = "pdf|*.pdf" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                ComponentDocumentWithChartBarPdf component = new ComponentDocumentWithChartBarPdf();
-                component.CreateDoc(new ComponentsLibraryNet60.Models.ComponentDocumentWithChartConfig
+                if (_plugins[_selectedPlugin].CreateChartDocument(new
+                PluginsConventionSaveDocument { FileName = dialog.FileName }))
                 {
-                    FilePath = dialog.FileName,
-                    Header = "Товары",
-                    ChartTitle = "Купленные товары",
-                    LegendLocation = ComponentsLibraryNet60.Models.Location.Bottom,
-                    Data = PdfData()
-                });
-                MessageBox.Show("Документ сохранен", "Создание документа",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private Dictionary<string, List<(int, double)>> PdfData()
-        {
-            var list = orderLogic.Read(null);
-            var list_product = new Dictionary<string, int>();
-            foreach (var item in list)
-            {
-                if (list_product.ContainsKey(item.Product))
-                    list_product[item.Product]++;
+                    MessageBox.Show("Документ сохранен", "Создание документа",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 else
                 {
-                    list_product.Add(item.Product, 1);
+                    MessageBox.Show("Ошибка при создании документа", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            var list_changed = new Dictionary<string, List<(int, double)>>();
-            foreach(var item in list_product)
-            {
-
-                list_changed.Add(item.Key, new List<(int, double)> { (1, item.Value) });
-            }
-            return list_changed;
         }
 
-        private void простойДокументCtrlSToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void SimpleDocToolStripMenuItem_Click(object sender, EventArgs e) =>
         CreateSimpleDoc();
 
-        private void документСТаблицейCtrlTToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void TableDocToolStripMenuItem_Click(object sender, EventArgs e) =>
         CreateTableDoc();
 
-        private void диаграммаCtrlCToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void ChartDocToolStripMenuItem_Click(object sender, EventArgs e) =>
         CreateChartDoc();
 
-        private void добавитьCtrlAToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void AddElementToolStripMenuItem_Click(object sender, EventArgs e) =>
         AddNewElement();
 
-        private void изменитьCtrlUToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void UpdElementToolStripMenuItem_Click(object sender, EventArgs e) =>
         UpdateElement();
 
-        private void удалитьCtrlDToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void DelElementToolStripMenuItem_Click(object sender, EventArgs e) =>
         DeleteElement();
-
-        private void продуктыToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = new FormProduct();
-            form.ShowDialog();
-        }
     }
 }

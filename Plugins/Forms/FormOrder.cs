@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace View.Forms
+namespace Plugins.Forms
 {
     public partial class FormOrder : Form
     {
@@ -61,7 +61,6 @@ namespace View.Forms
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
             Close();
         }
 
@@ -69,9 +68,10 @@ namespace View.Forms
         {
             if (textBoxFIO.Text != string.Empty && selectedComboBox.SelectedElement != string.Empty && inputBox.TextElement != null && image != null)
             {
-                if (id != null /*&& (textBoxFIO.Text != model.CustomerFIO || controlSelectedComboBoxList.SelectedElement != model.Product || inputBox.TextElement != model.Mail || flag_image)*/)
+                if (id != null)
                 {
-                    if (MessageBox.Show("Сохранить изменения в заказе?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    DialogResult dialogResult = MessageBox.Show("Сохранить изменения в заказе?", "Уведомление", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
                         orderLogic.CreateOrUpdate(new OrderBindingModel()
                         {
@@ -83,11 +83,14 @@ namespace View.Forms
                         });
                         return true;
                     }
+                    if (dialogResult == DialogResult.No)
+                        return true;
                     return false;
                 }
                 else
                 {
-                    if (MessageBox.Show("Сохранить заказ?", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    DialogResult dialogResult = MessageBox.Show("Сохранить изменения в заказе?", "Уведомление", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
                         orderLogic.CreateOrUpdate(new OrderBindingModel()
                         {
@@ -98,13 +101,20 @@ namespace View.Forms
                         });
                         return true;
                     }
+                    if (dialogResult == DialogResult.No)
+                        return true;
                     return false;
                 }
             }
             else
             {
-                MessageBox.Show("Введите значения");
-                return false;
+                DialogResult dialogResult = MessageBox.Show("Продолжить работу", "Уведомление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (DialogResult.Yes == dialogResult)
+                {
+                    MessageBox.Show("Введите значения");
+                    return false;
+                }
+                return true;
             }
         }
 
@@ -153,6 +163,7 @@ namespace View.Forms
             if (!Save())
             {
                 e.Cancel = true;
+                return;
             }
             DialogResult = DialogResult.OK;
         }

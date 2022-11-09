@@ -1,32 +1,39 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+	<UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ComponentsLibraryNet60" Version="1.0.0" />
     <PackageReference Include="ControlsLibraryNet60" Version="1.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LogicDB\LogicDB.csproj" />
-    <ProjectReference Include="..\Plugins\Plugins.csproj" />
+    <ProjectReference Include="..\WinFormsControlLibrarySergeev\WinFormsControlLibrarySergeev.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="lab1COP">
+      <HintPath>libraries\lab1COP.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsFormsControlLibraryKutygin">
+      <HintPath>libraries\WindowsFormsControlLibraryKutygin.dll</HintPath>
+    </Reference>
     <Reference Include="WinFormsControlLibrarySergeev">
       <HintPath>libraries\WinFormsControlLibrarySergeev.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Forms\FormOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>
