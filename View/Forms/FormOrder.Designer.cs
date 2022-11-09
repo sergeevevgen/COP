@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.controlSelectedComboBoxList = new ControlsLibraryNet60.Selected.ControlSelectedComboBoxList();
+            this.selectedComboBox = new ControlsLibraryNet60.Selected.ControlSelectedComboBoxList();
             this.labelFIO = new System.Windows.Forms.Label();
             this.labelProduct = new System.Windows.Forms.Label();
             this.labelMail = new System.Windows.Forms.Label();
@@ -51,14 +51,14 @@
             this.inputBox.Size = new System.Drawing.Size(190, 20);
             this.inputBox.TabIndex = 18;
             // 
-            // controlSelectedComboBoxList
+            // selectedComboBox
             // 
-            this.controlSelectedComboBoxList.Location = new System.Drawing.Point(162, 74);
-            this.controlSelectedComboBoxList.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.controlSelectedComboBoxList.Name = "controlSelectedComboBoxList";
-            this.controlSelectedComboBoxList.SelectedElement = "";
-            this.controlSelectedComboBoxList.Size = new System.Drawing.Size(160, 24);
-            this.controlSelectedComboBoxList.TabIndex = 0;
+            this.selectedComboBox.Location = new System.Drawing.Point(162, 74);
+            this.selectedComboBox.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.selectedComboBox.Name = "selectedComboBox";
+            this.selectedComboBox.SelectedElement = "";
+            this.selectedComboBox.Size = new System.Drawing.Size(160, 24);
+            this.selectedComboBox.TabIndex = 0;
             // 
             // labelFIO
             // 
@@ -145,7 +145,7 @@
             this.Controls.Add(this.labelProduct);
             this.Controls.Add(this.labelFIO);
             this.Controls.Add(this.inputBox);
-            this.Controls.Add(this.controlSelectedComboBoxList);
+            this.Controls.Add(this.selectedComboBox);
             this.Name = "FormOrder";
             this.Text = "Заказ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormOrder_FormClosing);
@@ -158,7 +158,7 @@
 
         #endregion
 
-        private ControlsLibraryNet60.Selected.ControlSelectedComboBoxList controlSelectedComboBoxList;
+        private ControlsLibraryNet60.Selected.ControlSelectedComboBoxList selectedComboBox;
         private Label labelFIO;
         private Label labelProduct;
         private Label labelMail;

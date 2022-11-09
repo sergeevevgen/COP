@@ -32,7 +32,7 @@ namespace View.Forms
             {
                 list.Add(product.Name);
             }
-            controlSelectedComboBoxList.AddList(list);
+            selectedComboBox.AddList(list);
         }
 
         private void LoadData()
@@ -46,7 +46,7 @@ namespace View.Forms
                     {
                         textBoxFIO.Text = view.CustomerFIO;
                         pictureBox.Image = byteArrayToImage(view.Image);
-                        controlSelectedComboBoxList.SelectedElement = view.Product;
+                        selectedComboBox.SelectedElement = view.Product;
                         inputBox.TextElement = view.Mail;
                         image = view.Image;
                     }
@@ -67,7 +67,7 @@ namespace View.Forms
 
         private bool Save()
         {
-            if (textBoxFIO.Text != string.Empty && controlSelectedComboBoxList.SelectedElement != string.Empty && inputBox.TextElement != null && image != null)
+            if (textBoxFIO.Text != string.Empty && selectedComboBox.SelectedElement != string.Empty && inputBox.TextElement != null && image != null)
             {
                 if (id != null /*&& (textBoxFIO.Text != model.CustomerFIO || controlSelectedComboBoxList.SelectedElement != model.Product || inputBox.TextElement != model.Mail || flag_image)*/)
                 {
@@ -78,7 +78,7 @@ namespace View.Forms
                             Id = id,
                             CustomerFIO = textBoxFIO.Text,
                             Image = image,
-                            Product = controlSelectedComboBoxList.SelectedElement,
+                            Product = selectedComboBox.SelectedElement,
                             Mail = inputBox.TextElement
                         });
                         return true;
@@ -93,7 +93,7 @@ namespace View.Forms
                         {
                             CustomerFIO = textBoxFIO.Text,
                             Image = image,
-                            Product = controlSelectedComboBoxList.SelectedElement,
+                            Product = selectedComboBox.SelectedElement,
                             Mail = inputBox.TextElement
                         });
                         return true;

@@ -47,18 +47,18 @@ namespace View
                     Width = 200
                 }
             };
-            controlDataTableTable.LoadColumns(config);
+            dataTableView.LoadColumns(config);
             orderLogic = new OrderLogic();
             ReloadData();
         }
 
         private void ReloadData()
         {
-            controlDataTableTable.Clear();
+            dataTableView.Clear();
             var data = orderLogic.Read(null);
             if (data.Count > 0)
             {
-                controlDataTableTable.AddTable(data);
+                dataTableView.AddTable(data);
             }
         }
 
@@ -102,7 +102,7 @@ namespace View
 
         private void UpdateElement()
         {
-            var element = controlDataTableTable.GetSelectedObject<OrderViewModel>();
+            var element = dataTableView.GetSelectedObject<OrderViewModel>();
             if (element == null)
             {
                 MessageBox.Show("Нет выбранного элемента", "Ошибка",
@@ -123,7 +123,7 @@ namespace View
             {
                 return;
             }
-            var element = controlDataTableTable.GetSelectedObject<OrderViewModel>();
+            var element = dataTableView.GetSelectedObject<OrderViewModel>();
             if (element == null)
             {
                 MessageBox.Show("Нет выбранного элемента", "Ошибка",

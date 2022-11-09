@@ -39,7 +39,7 @@
             this.документСТаблицейCtrlTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.диаграммаCtrlCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.продуктыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.controlDataTableTable = new ControlsLibraryNet60.Data.ControlDataTableTable();
+            this.dataTableView = new ControlsLibraryNet60.Data.ControlDataTableTable();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,21 +132,21 @@
             this.продуктыToolStripMenuItem.Text = "Продукты";
             this.продуктыToolStripMenuItem.Click += new System.EventHandler(this.продуктыToolStripMenuItem_Click);
             // 
-            // controlDataTableTable
+            // dataTableView
             // 
-            this.controlDataTableTable.Location = new System.Drawing.Point(13, 36);
-            this.controlDataTableTable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.controlDataTableTable.Name = "controlDataTableTable";
-            this.controlDataTableTable.SelectedRowIndex = -1;
-            this.controlDataTableTable.Size = new System.Drawing.Size(444, 320);
-            this.controlDataTableTable.TabIndex = 4;
+            this.dataTableView.Location = new System.Drawing.Point(13, 36);
+            this.dataTableView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dataTableView.Name = "dataTableView";
+            this.dataTableView.SelectedRowIndex = -1;
+            this.dataTableView.Size = new System.Drawing.Size(444, 320);
+            this.dataTableView.TabIndex = 4;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(471, 370);
-            this.Controls.Add(this.controlDataTableTable);
+            this.Controls.Add(this.dataTableView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
@@ -171,6 +171,6 @@
         private ToolStripMenuItem документСТаблицейCtrlTToolStripMenuItem;
         private ToolStripMenuItem диаграммаCtrlCToolStripMenuItem;
         private ToolStripMenuItem продуктыToolStripMenuItem;
-        private ControlsLibraryNet60.Data.ControlDataTableTable controlDataTableTable;
+        private ControlsLibraryNet60.Data.ControlDataTableTable dataTableView;
     }
 }
