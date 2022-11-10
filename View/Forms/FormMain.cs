@@ -1,4 +1,4 @@
-using PluginsConventionLibrary.Plugins;
+using Plugins.Plugins;
 
 namespace View
 {

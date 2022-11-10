@@ -1,4 +1,4 @@
-﻿namespace PluginsConventionLibrary.Plugins
+﻿namespace Plugins.Plugins
 {
     public interface IPluginsConvention
     {

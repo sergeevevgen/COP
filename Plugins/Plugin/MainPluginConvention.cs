@@ -3,7 +3,6 @@ using ComponentsLibraryNet60.DocumentWithTable;
 using ControlsLibraryNet60.Data;
 using ControlsLibraryNet60.Models;
 using LogicDB.Logics;
-using PluginsConventionLibrary.Plugins;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -12,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugins.Forms;
 using WinFormsControlLibrarySergeev.UnvisualComponents;
+using Plugins.Plugins;
 
 namespace Plugin.Plugin
 {

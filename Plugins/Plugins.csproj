@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LogicDB\LogicDB.csproj" />
-    <ProjectReference Include="..\PluginsConventionLibrary\PluginsConventionLibrary.csproj" />
     <ProjectReference Include="..\WinFormsControlLibrarySergeev\WinFormsControlLibrarySergeev.csproj" />
   </ItemGroup>
 
@@ -38,6 +37,10 @@
     <Compile Update="Forms\FormProduct.cs">
       <SubType>Form</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

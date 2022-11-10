@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PluginsConventionLibrary.Plugins
+namespace Plugins.Plugins
 {
-    public class PluginsConventionElement
+    public class PluginsConventionSaveDocument
     {
-        public int Id { get; set; }
+        public string FileName { get; set; }
     }
 }
