@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogicDB\LogicDB.csproj" />
+    <ProjectReference Include="..\PluginsConventionLibrary\PluginsConventionLibrary.csproj" />
     <ProjectReference Include="..\Plugins\Plugins.csproj" />
   </ItemGroup>
 

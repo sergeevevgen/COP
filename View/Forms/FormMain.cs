@@ -1,5 +1,4 @@
-using Plugins;
-using Plugins.Plugins;
+using PluginsConventionLibrary.Plugins;
 
 namespace View
 {
@@ -40,20 +39,6 @@ namespace View
             ControlsStripMenuItem.DropDownItems.AddRange(toolStripItems);
             return dic;
         }
-
-        //private void MenuItemProduct_Click(object sender, EventArgs e)
-        //{
-        //    FormProduct formProduct = new FormProduct();
-        //    formProduct.ShowDialog();
-        //}
-
-        //private void MenuItemOrders_Click(object sender, EventArgs e)
-        //{
-        //    _selectedPlugin = "Заказы";
-        //    panelControl.Controls.Clear();
-        //    panelControl.Controls.Add(_plugins[_selectedPlugin].GetControl);
-        //    panelControl.Controls[0].Dock = DockStyle.Fill;
-        //}
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {

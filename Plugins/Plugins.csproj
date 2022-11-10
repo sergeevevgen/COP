@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LogicDB\LogicDB.csproj" />
+    <ProjectReference Include="..\PluginsConventionLibrary\PluginsConventionLibrary.csproj" />
     <ProjectReference Include="..\WinFormsControlLibrarySergeev\WinFormsControlLibrarySergeev.csproj" />
   </ItemGroup>
 

@@ -3,7 +3,7 @@ using ComponentsLibraryNet60.DocumentWithTable;
 using ControlsLibraryNet60.Data;
 using ControlsLibraryNet60.Models;
 using LogicDB.Logics;
-using Plugins.Plugins;
+using PluginsConventionLibrary.Plugins;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

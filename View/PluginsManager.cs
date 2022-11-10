@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
-using Plugins.Plugins;
+using PluginsConventionLibrary.Plugins;
 
 namespace View
 {
