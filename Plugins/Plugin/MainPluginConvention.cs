@@ -25,7 +25,17 @@ namespace Plugin.Plugin
         public MainPluginConvention()
         {
             dataTableView = new ControlDataTableTable();
-             
+
+            var menu = new ContextMenuStrip();
+            var productMenuItem = new ToolStripMenuItem("Продукты");
+            menu.Items.Add(productMenuItem);
+            productMenuItem.Click += (sender, e) =>
+            {
+                var formProduct = new FormProduct();
+                formProduct.ShowDialog();
+            };
+            dataTableView.ContextMenuStrip = menu;
+
             config = new List<DataTableColumnConfig>
             {
                 new DataTableColumnConfig

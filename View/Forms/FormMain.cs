@@ -1,6 +1,5 @@
 using Plugins;
 using Plugins.Plugins;
-using View.Forms;
 
 namespace View
 {
