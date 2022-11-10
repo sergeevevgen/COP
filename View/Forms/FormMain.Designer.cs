@@ -76,7 +76,7 @@
             this.AddElementToolStripMenuItem.ShortcutKeys =
             ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.AddElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.AddElementToolStripMenuItem.Text = "Добавить    Ctrl + A";
+            this.AddElementToolStripMenuItem.Text = "Добавить";
             this.AddElementToolStripMenuItem.Click += new System.EventHandler(this.AddElementToolStripMenuItem_Click);
             // 
             // UpdElementToolStripMenuItem
@@ -85,7 +85,7 @@
             this.UpdElementToolStripMenuItem.ShortcutKeys =
             ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
             this.UpdElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.UpdElementToolStripMenuItem.Text = "Изменить   Ctrl + U";
+            this.UpdElementToolStripMenuItem.Text = "Изменить";
             this.UpdElementToolStripMenuItem.Click += new System.EventHandler(this.UpdElementToolStripMenuItem_Click);
             // 
             // DelElementToolStripMenuItem
@@ -94,7 +94,7 @@
             this.DelElementToolStripMenuItem.ShortcutKeys =
             ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.DelElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.DelElementToolStripMenuItem.Text = "Удалить       Ctrl + D";
+            this.DelElementToolStripMenuItem.Text = "Удалить";
             this.DelElementToolStripMenuItem.Click += new System.EventHandler(this.DelElementToolStripMenuItem_Click);
             // 
             // DocsToolStripMenuItem
@@ -113,7 +113,7 @@
             this.SimpleDocToolStripMenuItem.ShortcutKeys =
             ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.SimpleDocToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.SimpleDocToolStripMenuItem.Text = "Простой документ          Ctrl + S";
+            this.SimpleDocToolStripMenuItem.Text = "Простой документ";
             this.SimpleDocToolStripMenuItem.Click += new System.EventHandler(this.SimpleDocToolStripMenuItem_Click);
             // 
             // TableDocToolStripMenuItem
@@ -122,7 +122,7 @@
             this.TableDocToolStripMenuItem.ShortcutKeys =
             ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.TableDocToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.TableDocToolStripMenuItem.Text = "Документ с таблицей     Ctrl + T";
+            this.TableDocToolStripMenuItem.Text = "Документ с таблицей";
             this.TableDocToolStripMenuItem.Click += new System.EventHandler(this.TableDocToolStripMenuItem_Click);
             // 
             // ChartDocToolStripMenuItem
@@ -131,7 +131,7 @@
             this.ChartDocToolStripMenuItem.ShortcutKeys =
             ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.ChartDocToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.ChartDocToolStripMenuItem.Text = "Диаграмма                       Ctrl + C";
+            this.ChartDocToolStripMenuItem.Text = "Диаграмма";
             this.ChartDocToolStripMenuItem.Click += new System.EventHandler(this.ChartDocToolStripMenuItem_Click);
             // 
             // panelControl
