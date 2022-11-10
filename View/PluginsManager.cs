@@ -8,7 +8,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using Plugins.Plugins;
 
-namespace Plugins
+namespace View
 {
     public class PluginsManager
     {

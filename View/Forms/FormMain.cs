@@ -21,26 +21,32 @@ namespace View
             Dictionary<string, IPluginsConvention> dic = manager.plugins_dictionary;
 
 
-            ToolStripItem[] toolStripItems = new ToolStripItem[2];
-            ToolStripMenuItem menuItemOrders = new ToolStripMenuItem();
-            menuItemOrders.Text = "Заказы";
-            menuItemOrders.Click += MenuItemOrders_Click;
-            toolStripItems[0] = menuItemOrders;
-
-            ToolStripMenuItem menuItemProduct = new ToolStripMenuItem();
-            menuItemProduct.Text = "Продукты";
-            menuItemProduct.Click += MenuItemProduct_Click;
-            toolStripItems[1] = menuItemProduct;
+            ToolStripItem[] toolStripItems = new ToolStripItem[dic.Count];
+            int i = 0;
+            foreach(var item in dic)
+            {
+                ToolStripMenuItem itemMenu = new ToolStripMenuItem();
+                itemMenu.Text = item.Value.PluginName;
+                itemMenu.Click += (sender, e) =>
+                {
+                    _selectedPlugin = item.Value.PluginName;
+                    panelControl.Controls.Clear();
+                    panelControl.Controls.Add(_plugins[_selectedPlugin].GetControl);
+                    panelControl.Controls[0].Dock = DockStyle.Fill;
+                };
+                toolStripItems[i] = itemMenu;
+                i++;
+            }
 
             ControlsStripMenuItem.DropDownItems.AddRange(toolStripItems);
             return dic;
         }
 
-        private void MenuItemProduct_Click(object sender, EventArgs e)
-        {
-            FormProduct formProduct = new FormProduct();
-            formProduct.ShowDialog();
-        }
+        //private void MenuItemProduct_Click(object sender, EventArgs e)
+        //{
+        //    FormProduct formProduct = new FormProduct();
+        //    formProduct.ShowDialog();
+        //}
 
         private void MenuItemOrders_Click(object sender, EventArgs e)
         {
