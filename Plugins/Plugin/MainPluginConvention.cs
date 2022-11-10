@@ -25,6 +25,7 @@ namespace Plugin.Plugin
         public MainPluginConvention()
         {
             dataTableView = new ControlDataTableTable();
+             
             config = new List<DataTableColumnConfig>
             {
                 new DataTableColumnConfig

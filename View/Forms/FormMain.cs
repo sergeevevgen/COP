@@ -48,13 +48,13 @@ namespace View
         //    formProduct.ShowDialog();
         //}
 
-        private void MenuItemOrders_Click(object sender, EventArgs e)
-        {
-            _selectedPlugin = "Заказы";
-            panelControl.Controls.Clear();
-            panelControl.Controls.Add(_plugins[_selectedPlugin].GetControl);
-            panelControl.Controls[0].Dock = DockStyle.Fill;
-        }
+        //private void MenuItemOrders_Click(object sender, EventArgs e)
+        //{
+        //    _selectedPlugin = "Заказы";
+        //    panelControl.Controls.Clear();
+        //    panelControl.Controls.Add(_plugins[_selectedPlugin].GetControl);
+        //    panelControl.Controls[0].Dock = DockStyle.Fill;
+        //}
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
